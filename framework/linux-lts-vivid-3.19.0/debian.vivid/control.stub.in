@@ -1,0 +1,69 @@
+Source: SRCPKGNAME
+Section: devel
+Priority: optional
+Maintainer: Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4.0
+Build-Depends: debhelper (>= 5), dh-systemd, cpio, module-init-tools, kernel-wedge (>= 2.24ubuntu1), makedumpfile [amd64 i386], libelf-dev, libnewt-dev, libiberty-dev, rsync, libdw-dev, libpci-dev, dpkg (>= 1.16.0~ubuntu4), pkg-config, flex, bison, libunwind8-dev, openssl, libaudit-dev, bc, python-dev, gawk, device-tree-compiler [powerpc], u-boot-tools [powerpc], libc6-dev-ppc64 [powerpc], libudev-dev, autoconf, automake, libtool
+Build-Depends-Indep: xmlto, docbook-utils, ghostscript, transfig, bzip2, sharutils, asciidoc
+Vcs-Git: http://kernel.ubuntu.com/git-repos/ubuntu/ubuntu-trusty.git
+XS-Testsuite: autopkgtest
+#XS-Testsuite-Depends: gcc-4.7 binutils
+
+Package: linux-headers-PKGVER-ABINUM
+Architecture: all
+Multi-Arch: foreign
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, coreutils | fileutils (>= 4.0)
+Description: Header files related to Linux kernel version PKGVER
+ This package provides kernel header files for version PKGVER, for sites
+ that want the latest kernel headers. Please read
+ /usr/share/doc/SRCPKGNAME-headers-PKGVER-ABINUM/debian.README.gz for details
+
+#Package: SRCPKGNAME-tools-common
+#Architecture: all
+#Multi-Arch: foreign
+#Section: kernel
+#Priority: optional
+#Depends: ${misc:Depends}
+#Replaces: SRCPKGNAME-tools (<= 2.6.32-16.25)
+#Description: Linux kernel version specific tools for version PKGVER
+# This package provides the architecture independent parts for kernel
+# version locked tools (such as perf and x86_energy_perf_policy) for
+# version PGKVER.
+
+Package: SRCPKGNAME-tools-PKGVER-ABINUM
+Architecture: i386 amd64 armhf arm64 powerpc ppc64el
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-tools-common
+Description: Linux kernel version specific tools for version PKGVER-ABINUM
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version PKGVER-ABINUM on
+ =HUMAN=.
+ You probabally want to install linux-tools-PKGVER-ABINUM-<flavour>.
+
+#Package: SRCPKGNAME-cloud-tools-common
+#Architecture: all
+#Multi-Arch: foreign
+#Section: kernel
+#Priority: optional
+#Breaks: SRCPKGNAME-tools-common (<< 3.13.0-8.28), hv-kvp-daemon-init (<< 3.13)
+#Replaces: SRCPKGNAME-tools-common (<< 3.13.0-8.28), hv-kvp-daemon-init (<< 3.13)
+#Depends: ${misc:Depends}
+#Description: Linux kernel version specific cloud tools for version PKGVER
+# This package provides the architecture independent parts for kernel
+# version locked tools for cloud tools for version PGKVER.
+
+Package: SRCPKGNAME-cloud-tools-PKGVER-ABINUM
+Architecture: i386 amd64 armhf
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-cloud-tools-common
+Description: Linux kernel version specific cloud tools for version PKGVER-ABINUM
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud tools for version PKGVER-ABINUM on
+ =HUMAN=.
+ You probabally want to install linux-cloud-tools-PKGVER-ABINUM-<flavour>.
+

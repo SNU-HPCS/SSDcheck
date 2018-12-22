@@ -1,0 +1,41 @@
+[global]
+disable_prediction=1
+filename=${DEV_NAME}
+iodepth=32
+numjobs=2
+blocksize=4k
+runtime=${RUN_TIME}
+
+# for bit engine
+bitidx_1=${BIT_IDX_1}
+bitidx_1_value=${BIT_1_VALUE}
+bitengine=fix
+
+#zero_buffers
+#scramble_buffers=0
+time_based
+ioengine=libaio # (sync, libaio)
+randrepeat=0
+direct=1
+invalidate=1
+verify=0
+verify_fatal=0
+norandommap
+
+# no ramp time
+#ramp_time=5
+
+#bwavgtime=100
+#iopsavgtime=100
+#log_avg_msec=100
+
+group_reporting
+
+#write_iolog=io_mani
+
+[rand-write]
+#write_bw_log=rand-write
+#write_lat_log=rand-write
+#write_iops_log=rand-write
+rw=randwrite
+stonewall

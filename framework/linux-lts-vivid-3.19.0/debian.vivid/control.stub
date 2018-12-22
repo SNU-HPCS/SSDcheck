@@ -1,0 +1,818 @@
+Source: linux-lts-vivid
+Section: devel
+Priority: optional
+Maintainer: Ubuntu Kernel Team <kernel-team@lists.ubuntu.com>
+Standards-Version: 3.9.4.0
+Build-Depends: debhelper (>= 5), dh-systemd, cpio, module-init-tools, kernel-wedge (>= 2.24ubuntu1), makedumpfile [amd64 i386], libelf-dev, libnewt-dev, libiberty-dev, rsync, libdw-dev, libpci-dev, dpkg (>= 1.16.0~ubuntu4), pkg-config, flex, bison, libunwind8-dev, openssl, libaudit-dev, bc, python-dev, gawk, device-tree-compiler [powerpc], u-boot-tools [powerpc], libc6-dev-ppc64 [powerpc], libudev-dev, autoconf, automake, libtool
+Build-Depends-Indep: xmlto, docbook-utils, ghostscript, transfig, bzip2, sharutils, asciidoc
+Vcs-Git: http://kernel.ubuntu.com/git-repos/ubuntu/ubuntu-trusty.git
+XS-Testsuite: autopkgtest
+#XS-Testsuite-Depends: gcc-4.7 binutils
+
+Package: linux-headers-3.19.0-65
+Architecture: all
+Multi-Arch: foreign
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, coreutils | fileutils (>= 4.0)
+Description: Header files related to Linux kernel version 3.19.0
+ This package provides kernel header files for version 3.19.0, for sites
+ that want the latest kernel headers. Please read
+ /usr/share/doc/linux-lts-vivid-headers-3.19.0-65/debian.README.gz for details
+
+#Package: linux-lts-vivid-tools-common
+#Architecture: all
+#Multi-Arch: foreign
+#Section: kernel
+#Priority: optional
+#Depends: ${misc:Depends}
+#Replaces: linux-lts-vivid-tools (<= 2.6.32-16.25)
+#Description: Linux kernel version specific tools for version 3.19.0
+# This package provides the architecture independent parts for kernel
+# version locked tools (such as perf and x86_energy_perf_policy) for
+# version PGKVER.
+
+Package: linux-lts-vivid-tools-3.19.0-65
+Architecture: i386 amd64 armhf arm64 powerpc ppc64el
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-tools-common
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+ You probabally want to install linux-tools-3.19.0-65-<flavour>.
+
+#Package: linux-lts-vivid-cloud-tools-common
+#Architecture: all
+#Multi-Arch: foreign
+#Section: kernel
+#Priority: optional
+#Breaks: linux-lts-vivid-tools-common (<< 3.13.0-8.28), hv-kvp-daemon-init (<< 3.13)
+#Replaces: linux-lts-vivid-tools-common (<< 3.13.0-8.28), hv-kvp-daemon-init (<< 3.13)
+#Depends: ${misc:Depends}
+#Description: Linux kernel version specific cloud tools for version 3.19.0
+# This package provides the architecture independent parts for kernel
+# version locked tools for cloud tools for version PGKVER.
+
+Package: linux-lts-vivid-cloud-tools-3.19.0-65
+Architecture: i386 amd64 armhf
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-cloud-tools-common
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud tools for version 3.19.0-65 on
+ 64 bit x86.
+ You probabally want to install linux-cloud-tools-3.19.0-65-<flavour>.
+
+
+Package: linux-image-3.19.0-65-generic
+Architecture: i386 amd64 armhf arm64 ppc64el
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules, virtualbox-guest-modules [i386 amd64 x32]
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: grub-pc [i386 amd64 x32] | grub-efi-amd64 [amd64 x32] | grub-efi-ia32 [i386 amd64 x32] | grub [i386 amd64 x32] | lilo (>= 19.1) [i386 amd64 x32] | flash-kernel [armhf arm64] | grub-ieee1275 [ppc64el]
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-generic
+Description: Linux kernel image for version 3.19.0 on 64 bit x86 SMP
+ This package contains the Linux kernel image for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports Generic processors.
+ .
+ Geared toward desktop and server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-generic meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-generic
+Architecture: i386 amd64 armhf arm64 ppc64el
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-generic, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 64 bit x86 SMP
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports Generic processors.
+ .
+ Geared toward desktop and server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-generic meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-generic
+Architecture: i386 amd64 armhf arm64 ppc64el
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 64 bit x86 SMP
+ This package provides kernel header files for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-generic-dbgsym
+Architecture: i386 amd64 armhf arm64 ppc64el
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 64 bit x86 SMP
+ This package provides a kernel debug image for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-generic
+Architecture: i386 amd64 armhf arm64 ppc64el
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-generic
+Architecture: i386 amd64 armhf arm64 ppc64el
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-generic
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: i386 amd64 armhf arm64 ppc64el
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
+
+Package: linux-image-3.19.0-65-generic-lpae
+Architecture: armhf
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: flash-kernel [armhf]
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-generic-lpae
+Description: Linux kernel image for version 3.19.0 on 64 bit x86 SMP
+ This package contains the Linux kernel image for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports Generic LPAE processors.
+ .
+ Geared toward desktop and server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-generic-lpae meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-generic-lpae
+Architecture: armhf
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-generic-lpae, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 64 bit x86 SMP
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports Generic LPAE processors.
+ .
+ Geared toward desktop and server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-generic-lpae meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-generic-lpae
+Architecture: armhf
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 64 bit x86 SMP
+ This package provides kernel header files for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-generic-lpae-dbgsym
+Architecture: armhf
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 64 bit x86 SMP
+ This package provides a kernel debug image for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-generic-lpae
+Architecture: armhf
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-generic-lpae
+Architecture: armhf
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-generic-lpae
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: armhf
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
+
+Package: linux-image-3.19.0-65-lowlatency
+Architecture: i386 amd64
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, kvm-api-4, redhat-cluster-modules, ivtv-modules, virtualbox-guest-modules [i386 amd64 x32]
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: grub-pc [i386 amd64 x32] | grub-efi-amd64 [amd64 x32] | grub-efi-ia32 [i386 amd64 x32] | grub [i386 amd64 x32] | lilo (>= 19.1) [i386 amd64 x32] | flash-kernel [armhf arm64]
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-lowlatency
+Description: Linux kernel image for version 3.19.0 on 64 bit x86 SMP
+ This package contains the Linux kernel image for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports Lowlatency processors.
+ .
+ Geared toward desktop and server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-lowlatency meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-lowlatency
+Architecture: i386 amd64
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-lowlatency, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 64 bit x86 SMP
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports Lowlatency processors.
+ .
+ Geared toward desktop and server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-lowlatency meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-lowlatency
+Architecture: i386 amd64
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 64 bit x86 SMP
+ This package provides kernel header files for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-lowlatency-dbgsym
+Architecture: i386 amd64
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 64 bit x86 SMP
+ This package provides a kernel debug image for version 3.19.0 on
+ 64 bit x86 SMP.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-lowlatency
+Architecture: i386 amd64
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-lowlatency
+Architecture: i386 amd64
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-lowlatency
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: i386 amd64
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
+
+Package: linux-image-3.19.0-65-powerpc-e500mc
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, redhat-cluster-modules, ivtv-modules
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: grub-ieee1275
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-powerpc-e500mc
+Description: Linux kernel image for version 3.19.0 on 32-bit Freescale Power e500mc
+ This package contains the Linux kernel image for version 3.19.0 on
+ 32-bit Freescale Power e500mc.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 32-bit Freescale Power e500mc processors.
+ .
+ Geared toward server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc-e500mc meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-powerpc-e500mc
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-powerpc-e500mc, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 32-bit Freescale Power e500mc
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 32-bit Freescale Power e500mc.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 32-bit Freescale Power e500mc processors.
+ .
+ Geared toward server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc-e500mc meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-powerpc-e500mc
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 32-bit Freescale Power e500mc
+ This package provides kernel header files for version 3.19.0 on
+ 32-bit Freescale Power e500mc.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-powerpc-e500mc-dbgsym
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 32-bit Freescale Power e500mc
+ This package provides a kernel debug image for version 3.19.0 on
+ 32-bit Freescale Power e500mc.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-powerpc-e500mc
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-powerpc-e500mc
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-powerpc-e500mc
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: powerpc
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
+
+Package: linux-image-3.19.0-65-powerpc-smp
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, redhat-cluster-modules, ivtv-modules
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: yaboot
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-powerpc-smp
+Description: Linux kernel image for version 3.19.0 on 32-bit PowerPC SMP
+ This package contains the Linux kernel image for version 3.19.0 on
+ 32-bit PowerPC SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 32-bit PowerPC SMP processors.
+ .
+ Geared toward desktop or server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc-smp meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-powerpc-smp
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-powerpc-smp, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 32-bit PowerPC SMP
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 32-bit PowerPC SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 32-bit PowerPC SMP processors.
+ .
+ Geared toward desktop or server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc-smp meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-powerpc-smp
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 32-bit PowerPC SMP
+ This package provides kernel header files for version 3.19.0 on
+ 32-bit PowerPC SMP.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-powerpc-smp-dbgsym
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 32-bit PowerPC SMP
+ This package provides a kernel debug image for version 3.19.0 on
+ 32-bit PowerPC SMP.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-powerpc-smp
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-powerpc-smp
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-powerpc-smp
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: powerpc
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
+
+Package: linux-image-3.19.0-65-powerpc64-emb
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, redhat-cluster-modules, ivtv-modules
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: grub-ieee1275
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-powerpc64-emb
+Description: Linux kernel image for version 3.19.0 on 64-bit PowerPC SMP Book3E
+ This package contains the Linux kernel image for version 3.19.0 on
+ 64-bit PowerPC SMP Book3E.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 64-bit PowerPC SMP Book3E processors.
+ .
+ Geared toward desktop or server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc64-emb meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-powerpc64-emb
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-powerpc64-emb, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 64-bit PowerPC SMP Book3E
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 64-bit PowerPC SMP Book3E.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 64-bit PowerPC SMP Book3E processors.
+ .
+ Geared toward desktop or server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc64-emb meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-powerpc64-emb
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 64-bit PowerPC SMP Book3E
+ This package provides kernel header files for version 3.19.0 on
+ 64-bit PowerPC SMP Book3E.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-powerpc64-emb-dbgsym
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 64-bit PowerPC SMP Book3E
+ This package provides a kernel debug image for version 3.19.0 on
+ 64-bit PowerPC SMP Book3E.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-powerpc64-emb
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-powerpc64-emb
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-powerpc64-emb
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: powerpc
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
+
+Package: linux-image-3.19.0-65-powerpc64-smp
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Pre-Depends: dpkg (>= 1.10.24)
+Provides: linux-image, linux-image-3.0, fuse-module, redhat-cluster-modules, ivtv-modules
+Depends: ${misc:Depends}, ${shlibs:Depends}, initramfs-tools (>= 0.36ubuntu6) | linux-initramfs-tools, module-init-tools (>= 3.3-pre11-4ubuntu3)
+Conflicts: hotplug (<< 0.0.20040105-1)
+Recommends: yaboot
+Suggests: fdutils, linux-lts-vivid-tools, linux-headers-3.19.0-65-powerpc64-smp
+Description: Linux kernel image for version 3.19.0 on 64-bit PowerPC SMP
+ This package contains the Linux kernel image for version 3.19.0 on
+ 64-bit PowerPC SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 64-bit PowerPC SMP processors.
+ .
+ Geared toward desktop or server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc64-smp meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-image-extra-3.19.0-65-powerpc64-smp
+Architecture: powerpc
+Section: kernel
+Priority: optional
+Depends: ${misc:Depends}, ${shlibs:Depends}, linux-image-3.19.0-65-powerpc64-smp, crda (>=1.1.1-1ubuntu2) | wireless-crda
+Description: Linux kernel extra modules for version 3.19.0 on 64-bit PowerPC SMP
+ This package contains the Linux kernel extra modules for version 3.19.0 on
+ 64-bit PowerPC SMP.
+ .
+ Also includes the corresponding System.map file, the modules built by the
+ packager, and scripts that try to ensure that the system is not left in an
+ unbootable state after an update.
+ .
+ Supports 64-bit PowerPC SMP processors.
+ .
+ Geared toward desktop or server systems.
+ .
+ You likely do not want to install this package directly. Instead, install
+ the linux-powerpc64-smp meta-package, which will ensure that upgrades work
+ correctly, and that supporting packages are also installed.
+
+Package: linux-headers-3.19.0-65-powerpc64-smp
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-headers-3.19.0-65, ${shlibs:Depends}
+Provides: linux-headers, linux-headers-3.0
+Description: Linux kernel headers for version 3.19.0 on 64-bit PowerPC SMP
+ This package provides kernel header files for version 3.19.0 on
+ 64-bit PowerPC SMP.
+ .
+ This is for sites that want the latest kernel headers.  Please read
+ /usr/share/doc/linux-headers-3.19.0-65/debian.README.gz for details.
+
+Package: linux-image-3.19.0-65-powerpc64-smp-dbgsym
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}
+Provides: linux-debug
+Description: Linux kernel debug image for version 3.19.0 on 64-bit PowerPC SMP
+ This package provides a kernel debug image for version 3.19.0 on
+ 64-bit PowerPC SMP.
+ .
+ This is for sites that wish to debug the kernel.
+ .
+ The kernel image contained in this package is NOT meant to boot from. It
+ is uncompressed, and unstripped. This package also includes the
+ unstripped modules.
+
+Package: linux-tools-3.19.0-65-powerpc64-smp
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-tools-3.19.0-65
+Description: Linux kernel version specific tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools (such as perf and x86_energy_perf_policy) for
+ version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-cloud-tools-3.19.0-65-powerpc64-smp
+Architecture: powerpc
+Section: devel
+Priority: optional
+Depends: ${misc:Depends}, linux-lts-vivid-cloud-tools-3.19.0-65
+Description: Linux kernel version specific cloud tools for version 3.19.0-65
+ This package provides the architecture dependant parts for kernel
+ version locked tools for cloud for version 3.19.0-65 on
+ 64 bit x86.
+
+Package: linux-lts-vivid-udebs-powerpc64-smp
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: powerpc
+Depends: ${udeb:Depends}
+Description: Metapackage depending on kernel udebs
+ This package depends on the all udebs that the kernel build generated,
+ for easier version and migration tracking.
+
