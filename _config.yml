@@ -2,3 +2,7 @@ title: SSDcheck
 description: SSDcheck: Timely and Accurate Prediction of Irregular Behaviors in Black-Box SSDs.
 show_downloads: true
 theme: jekyll-theme-slate
+
+
+github:
+  zip_url: https://github.com/joonsung90/ssdcheck/archive/master.zip
