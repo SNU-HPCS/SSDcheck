@@ -4,10 +4,10 @@ SSDcheck is a novel methodology to accurately predict the timing of future high 
 SSDcheck extracts device-specific feature parameters and provides the performance model of black-box SSDs by using the extracted features.
 Users can utilize the extracted features and performance model in various scenarios.
 
-The proejct mainly consists of three parts: feature extraction, performance model, and use cases.
+The project mainly consists of three parts: feature extraction, performance model, and use cases.
 First, SSDcheck extracts device-specific features (e.g., *internal volume*, *write buffer*) by using diagnosis code snippets.
 With the extracted features, SSDcheck builds the performance model to predict the latency of the next access.
-Lastly, we provide two example use cases exploiting SSDcheck to improvde the overall throughput and reduce the tail latency significantly.
+Lastly, we provide two example use cases exploiting SSDcheck to improve the overall throughput and reduce the tail latency significantly.
 
 ## How to build
 
@@ -18,7 +18,7 @@ Below instructions show how to build the modified fio and our kernel framework.
 
 ### fio
 
-We use flexible I/O tester (fio) to generate a manipulated access pattern to extract useful feature parameters. Building the modified fio is really simple. Please execute below commands in the fio's source directory (**tools/fio**)
+We use flexible I/O tester (fio) to generate a manipulated access pattern to extract useful feature parameters. Building the modified fio is really simple. Please execute below commands in the fio's source directory (**tools/fio**).
 
 ```
 ./configure
@@ -33,7 +33,7 @@ Since the current implementation modifies a MegaRAID SAS device driver to monito
 Apart from the latency monitor, other components (e.g., performance model, use cases) are implemented as a kernel module; therefore, users can easily port these modules to their own kernel.
 
 The kernel source code is in **framework/linux-lts-vivid-3.19.0** directory and users can build this kernel source similar to typical kernel image compilation.
-First, to setup build environment, you should install some packages. You can get these packages by following commands. (Note that we assume kernel version *3.19.0-18-lowlatency*)
+First, to set up build environment, you should install some packages. You can get these packages by following commands. (Note that we assume kernel version *3.19.0-18-lowlatency*)
 
 ```
 sudo apt-get build-dep linux-image-3.19.0-18-lowlatency
@@ -119,7 +119,7 @@ Here, we provide an example method to extract the size of write buffer.
 We measure latencies of the read requests to find out periodic spiking latencies and calculate the size of write buffer by counting the number of write requests between back-to-back spiking latencies' requests.
 In "(PROJ_ROOT)/feature_extraction/write_buffer" directory, we prepare a fio script "buffer_test.fio" issuing write requests with a given think time while running read requests in background.
 Similar to the allocation volume case, please modify run_all.sh file to correctly set your target SSD.
-After than, run below commands.
+After then, run below commands.
 
 ```
 ./run_all.sh
@@ -168,4 +168,4 @@ Please refer to their source codes in the below files.
 
 # Publication
 
-This work has been published in [IEEE CAL '18](https://ieeexplore.ieee.org/document/8126227) and [MICRO '18](https://ieeexplore.ieee.org/abstract/document/8574561).
+This work has been published in [IEEE CAL '18](https://ieeexplore.ieee.org/document/8126227) and [MICRO '18](https://ieeexplore.ieee.org/abstract/document/8574561) ([Lightning talk](https://youtu.be/W4KmgaeoUwo))
