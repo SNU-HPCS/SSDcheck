@@ -1,7 +1,7 @@
 # SSDcheck
 
-SSDcheck, a novel methodology to accurately predict the timing of futuer high latency without hardware modifications.
-SSDcheck extracts device-specific feature parameters and provides performance model of black-box SSDs by using the extracted features.
+SSDcheck is a novel methodology to accurately predict the timing of future high latency without any hardware modification.
+SSDcheck extracts device-specific feature parameters and provides the performance model of black-box SSDs by using the extracted features.
 Users can utilize the extracted features and performance model in various scenarios.
 
 The proejct mainly consists of three parts: feature extraction, performance model, and use cases.
@@ -13,7 +13,7 @@ Lastly, we provide two example use cases exploiting SSDcheck to improvde the ove
 
 To use SSDcheck, users need to build two packages: *fio* and *framework*.
 To extract device-specific features, we provide diagnosis code snippets by modifying flexible I/O tester (fio) to generate manipulated access patterns.
-In addition to building fio, users should build a kernel image since our all components (e.g., prediction engine, use cases) are implemented in the kernel level.
+In addition to building fio, users should build a kernel image since all our components (e.g., prediction engine, use cases) are implemented in the kernel level.
 Below instructions show how to build the modified fio and our kernel framework.
 
 ### fio
@@ -66,10 +66,17 @@ update-initramfs -u -k 3.19.0-18-lowlatency
 
 ## How to use
 
-## Feature Extraction (by using fio)
+Now, you are ready to deploy SSDcheck in your system.
+We provide detail steps: feature extraction, prediction engine, and use cases.
+First, we can extract device-specific feature parameters from black-box SSDs by executing diagnosis code snippets.
+Second, we show how to exploit extracted features to predict irregular behaviors during runtime.
+Lastly, we present two novel use cases exploiting SSDcheck.
+
+### Feature Extraction (by using fio)
 
 We modify flexible I/O tester (fio) to generate a manipulated access pattern to extract device-specific feature parameters.
 We provide two new options: *fix* and *flip*.
+
 *Fix* option only fixes a value (0 or 1) for a given bit index. For example, if a user wants to fix a bit value as 1 for a bit index 17, the user can set options as follows.
   
 ```
@@ -78,18 +85,55 @@ bitidx_1=17
 bitidx_1_value=1
 ```  
 
-*Flip* option alternately performs writes to two addresses of which the only specific bit value (of the given bit index) is different. For example, the user can only change a bit value for a bit index 17 by using these options as follows.
+*Flip* option alternately writes in two addresses of which the only specific bit value (of the given bit index) is different. For example, the user can only change a bit value for a bit index 17 by using these options as follows.
   
 ```
 bitengine=flip
 bitidx_1=17
 ```
 
-## Performance Modeling
+### Feature Extraction - allocation volume
 
-## Use Cases
+*Allocation volume* is determined by specific bit values for given bit indexes.
+You can check your SSD if it has the allocation volume feature.
 
-### Volume-aware Logical Volume Manager (VA-LVM)
+In "(PROJ_ROOT)/feature_extraction/allocation_region" directory, please modify run_all.sh file to correctly set your target SSD.
+You can concurrently examine multple SSDs by adding their information into "bitidxs_start, biidxs_end, bdevs".
+After finishing the configuration setup, Modifying a command (#start_test "ssda" "1tb" &) as following your configuration.
+For example, if you want to check two SSDs: "ssda (512GB)" and "ssdb (1TB)", inserting below two lines in the script.
+
+```
+start_test "ssda" "512gb" &
+start_test "ssdb" "1tb" &
+```
+
+Now you can execute run_all.sh and parser.py to extract the allocation volume feature.
+```
+./run_all.sh
+./parser.py
+```
+
+### Feature Extraction - write buffer
+
+Here, we provide an example method to extract the size of write buffer.
+We measure latencies of the read requests to find out periodic spiking latencies and calculate the size of write buffer by counting the number of write requests between back-to-back spiking latencies' requests.
+In "(PROJ_ROOT)/feature_extraction/write_buffer" directory, we prepare a fio script "buffer_test.fio" issuing write requests with a given think time while running read requests in background.
+Similar to the allocation volume case, please modify run_all.sh file to correctly set your target SSD.
+After than, run below commands.
+
+```
+./run_all.sh
+./parser.py
+```
+
+### Prediction Engine
+
+By using the extracted features, you can exploit the prediction engine.
+We implement the prediction engine in the kernel level and its interfaces (via ioctl and the exported kernel function call).
+For ioctl, please check the *do_prediction* function in (PROJ_ROOT)/tools/fio/engines/libaio.c file.
+
+
+### Use Case 1: Volume-aware Logical Volume Manager (VA-LVM)
 For VA-LVM, we provide an example device mapper (dm-split.c, located in ${KERNEL}/drivers/md/dm-split.c). You can build this module (dm-split) by following commands.
 
 ```
@@ -97,7 +141,7 @@ cd ${KERNEL}/
 make M=$(pwd)/drivers/md modules
 ```
 
-After building successfully, you can get a kernel module (dm-split.ko) which can be loaded via 'insmod dm-split.ko'. Now, you can create volume-aware logical volumes by using 'dmsetup' command.
+After building the module, you can get a kernel module (dm-split.ko) which can be loaded via 'insmod dm-split.ko'. Now, you can create volume-aware logical volumes by using 'dmsetup' command.
 
 ```
 dmsetup create <volume_name> --table "0 <size> split <path of block device> 0 <bitidx1>:<bitval1> <bitidx2>:<bitval2>"
@@ -112,8 +156,15 @@ dmsetup create <volume_name> --table "0 <size> split <path of block device> 0 <b
 For now, you can create multiple volume-aware logical volumes sharing the same SSD without any interference among the volumes.
 
 
-### Prediction-aware I/O Scheduler (PAS)
+### Use Case 2: Prediction-aware I/O Scheduler (PAS)
 
+We also provide the prediction-aware I/O schedulers (w/o nvme, w/ nvme) in this project.
+Please refer to their source codes in the below files.
+
+```
+(PROJ_ROOT)/framework/linux-lts-vivid-3.19.0/block/pas-iosched.c
+(PROJ_ROOT)/framework/linux-lts-vivid-3.19.0/block/pas-iosched-nvram.c
+```
 
 # Publication
 
