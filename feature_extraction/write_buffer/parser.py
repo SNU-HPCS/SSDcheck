@@ -31,7 +31,7 @@ def find_write_by_ts(write_lats, read_ts):
     write_reqids = sorted(write_lats.keys())
 
     for write_reqid in write_reqids:
-        if (write_lats[write_reqid]["ts"] > read_ts):
+        if (write_lats[write_reqid]["ts"] >= read_ts):
             return ((write_reqid - 1),)
 
     failed("find_write_by_ts error, Unknown")
@@ -45,17 +45,22 @@ def calc_buffer_size(read_lats, write_lats,
     for read_reqid in read_reqids:
         read_ts = read_lats[read_reqid]["ts"]
         read_lat = read_lats[read_reqid]["lat"]
-
+        #print read_reqid
         if (read_lat > lat_threshold):
-            (reqid, ) = find_write_by_ts(write_lats, read_ts)
-            target_writes.append((reqid, read_lat))
+            #print read_ts
+            if (read_ts < 4900):
+                (reqid, ) = find_write_by_ts(write_lats, read_ts)
+                target_writes.append((reqid, read_lat))
 
     # cal interval
     for i in range(len(target_writes) - 1):
-        print "[%3d] read_lat:%d"%(target_writes[i+1][1] - target_writes[i][1],
-                                   target_writes[i][0])
+        print "[%3d] read_lat:%d, buffer_size:%d "%(target_writes[i][0],
+                                   target_writes[i][1], (4096*(target_writes[i+1][0]-target_writes[i][0])))
 
-def calc_buffer_size(read_time_max_list, write_latency_max, lat_threshold, gc_threshold, bs_size):
+    
+    # above returns req_id in target_writes[i][0]
+
+def calc_buffer_size2(read_time_max_list, write_latency_max, lat_threshold, gc_threshold, bs_size):
     flush_latency_max = 0
     flush_time_list = []
     read_elapsed_list = sorted(read_time_max_list.keys())
