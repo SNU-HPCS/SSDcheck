@@ -1,0 +1,12 @@
+[global]
+disable_prediction=1
+filename={DEV_NAME}
+iodepth=1
+numjobs=1
+blocksize=4k
+
+ioengine=libaio
+
+[generate_io]
+read_iolog=${LOG_NAME}
+write_lat_log=test-rw_${WRITE_NUM}

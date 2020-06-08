@@ -1,0 +1,27 @@
+# comments
+
+[global]
+disable_prediction=1
+invalidate=1
+numjobs=1
+ioengine=libaio
+iodepth=1
+blocksize=4k
+direct=1
+
+# iodepth=16
+# blocksize=4k
+
+filename=${DEV_NAME}
+runtime=10s
+
+# time_based
+
+# norandommap 
+# group_reporting
+
+[mixed-rw]
+readwrite=randrw
+thinktime=${THINK_TIME}
+
+write_lat_log=read_trigger_test

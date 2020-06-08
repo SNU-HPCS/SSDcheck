@@ -1,0 +1,41 @@
+# Made by KH
+
+
+This is for read-triggering buffer flush ssds.
+
+(1) Check whether ssd has read-triggering buffer flush property or not
+
+Use read_trigger.fio job file. You can run command like below.
+
+sudo DEV_NAME="dev_name" THINK_TIME="time" ../../benchmark/fio/fio read_trigger.fio
+
+If you wnat to change target ssd (default is /dev/sdc), you may modify the job file.
+Results will be stored in current directory, whose name starts with "read_trigger_test". 
+
+
+(2) Check read latency with various number of writes per read
+
+Run ./run_all.sh. This shell script will use test.fio 
+Results will be stored in ../../result/${SSD_NAME}/latency_read-trigger directory.
+
+(3) Check "normal" read latency.
+
+"Normal" read latency means read-request's latency collected by ruuning fio job that has no write request inside.
+ 
+Use normal-read.fio job file. You can run command like below.
+
+sudo ../../benchmark/fio/fio normal-read.fio 
+
+If you want to change target ssd (default is /dev/sdc), you may modify the job file.
+Results will be stored in current directory.
+
+
+(4) Check read latency with various write ratio
+
+Use mix_readwrite_ratio.fio.
+You can run command like below.
+sudo READ_RATIO=70 WRITE_RATIO=30 ../../benchmark/fio/fio mix_readwrite_ratio.fio
+
+If you want to change target ssd (default is /dev/sdc), you may modify the job file.
+
+Results will be stored in current directory.

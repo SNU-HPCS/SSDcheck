@@ -1,0 +1,17 @@
+# This job file is for normal read, and performed in read-triggering buffer flush ssds  (no write included)
+
+
+
+[global]
+disable_prediction=1
+filename=/dev/sdc
+runtime=30s
+iodepth=1
+numjobs=1
+ioengine=libaio
+direct=1
+
+[read]
+readwrite=randread
+bs=4k
+write_lat_log=read-lat

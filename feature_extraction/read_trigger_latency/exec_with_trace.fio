@@ -1,0 +1,26 @@
+# This job file is for mixed rw with different ratio.
+# It can be used for comparison between normal read latency.
+
+
+[global]
+disable_prediction=1
+filename=${DEV_NAME}
+runtime=15s
+iodepth=1
+numjobs=1
+ioengine=libaio
+direct=1
+
+
+[mixedrw]
+readwrite=randrw
+bs=4k
+#write_lat_log=mixed-rw_${READ_RATIO}_${WRITE_RATIO}
+rwmixread=${READ_RATIO}
+rwmixwrite=${WRITE_RATIO}
+write_iolog=finaltest_${READ_RATIO}.log
+#read_iolog=finaltest_${READ_RATIO}.log
+#replay_redirect=${DEV_NAME}
+
+
+stonewall
