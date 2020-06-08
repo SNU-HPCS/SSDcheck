@@ -1,0 +1,31 @@
+# comments
+
+[global]
+disable_prediction=1
+invalidate=1
+numjobs=1
+ioengine=libaio
+iodepth=${IO_DEPTH}
+blocksize=${WRITE_BS}
+direct=1
+
+# iodepth=16
+# blocksize=4k
+
+filename=${DEV_NAME}
+# runtime=${RUN_TIME}
+
+# time_based
+log_avg_msec=500
+
+# norandommap 
+# group_reporting
+
+[rand-write]
+readwrite=randwrite
+io_size=20G
+thinktime=${THINK_TIME}
+thinktime_blocks=3000000
+
+#write_lat_log=${LAT_LOG_FNAME}
+write_bw_log=${BW_LOG_FNAME}
