@@ -1,0 +1,9 @@
+USECASE - RAOS (Recover-Aware Object Storage system)
+
+Build
+ 1. create a build directory (e.g., mkdir build)
+ 2. cmake (cd build; cmake ..)
+ 3. make (make -j)
+
+Run
+ Usage ./usecase_object_storage <th_num> <block_size(ex: 4k, 4m)> <read_ratio> <thinktime(us)> <num_replica> <tot_req_count> <EXEC_MODE> <log_name>
