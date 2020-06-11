@@ -166,6 +166,26 @@ Please refer to their source codes in the below files.
 (PROJ_ROOT)/framework/linux-lts-vivid-3.19.0/block/pas-iosched-nvram.c
 ```
 
+
+### Use Case 3: NVRAM-attached Storage System (NaSS)
+
+We also provide the NVRAM-attached storage system to leverage read-triggering SSDs.
+You can find the detailed sources for this usecase at the below directory.
+
+```
+(PROJ_ROOT)/usecases/NaSS/
+```
+
+
+### Use Case 4: Recovery-aware Object Storage (RAOS)
+
+To exploit the background recovery mechanisms (e.g., background GC, background SLC region recovery, ...) in modern SSDs, we provide an example usecase, called recovery-aware object storage (RAOS).
+You can find more details at the below directory.
+
+```
+(PROJ_ROOT)/usecases/RAOS/
+```
+
 # Publication
 
 This work has been published in [IEEE CAL '18](https://ieeexplore.ieee.org/document/8126227) and [MICRO '18](https://ieeexplore.ieee.org/abstract/document/8574561) ([Lightning talk](https://youtu.be/W4KmgaeoUwo))
